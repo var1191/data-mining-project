@@ -42,9 +42,9 @@ dfReg_label_dict = {} # to get the label detail
 
 # if 'Y' is Object, encode it using Label Encoder
 if df_reg[choice_reg].dtype == 'O':
-    dfReg_label_dict[Y.columns] = {}
+    dfReg_label_dict[choice_reg] = {}
     Y = le.fit_transform(Y)
-    dfReg_label_dict[Y.columns].update(dict(zip(le.classes_, range(len(le.classes_)))))
+    dfReg_label_dict[choice_reg].update(dict(zip(le.classes_, range(len(le.classes_)))))
 
 X = pd.get_dummies(data=X)
 

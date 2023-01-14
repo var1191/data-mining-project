@@ -56,4 +56,6 @@ if df_reg[choice_reg].dtype == 'O':
 X = pd.get_dummies(data=X)
 
 # Model Construction
+testSize = st.slider('Choose the test size:', value= (0.1, 0.5), step=0.1)
+
 X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.3, random_state=101)

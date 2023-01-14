@@ -10,7 +10,9 @@ st.text('My First Streamlit!')
 st.header('This is a header.')
 st.subheader('This is a subheader.')
 
-st.markdown('**Hello World**')
-st.markdown('*Hello World*')
+st.markdown('** Hello World **')
+st.markdown('* Hello World *')
+
+st.markdown('# Header in markdown')
 
 

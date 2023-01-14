@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import folium
 from streamlit_folium import folium_static
+from sklearn.linear_model import LinearRegression
 
 st.title('Real-Time Prediction and Visualization')
 

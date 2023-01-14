@@ -9,6 +9,7 @@ st.title('Real-Time Prediction and Visualization')
 # Read the dataset
 st.markdown('This is our dataset after preprocessing.')
 new_df = pd.read_csv('final_df.csv')
+new_df = new_df.drop(columns= new_df.columns[0])
 st.dataframe(new_df.head())
 
 

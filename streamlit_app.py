@@ -5,7 +5,11 @@ import folium
 from streamlit_folium import folium_static
 from sklearn.linear_model import LinearRegression
 
-st.title('Real-Time Prediction and Visualization')
+st.set_page_config(
+    page_title = 'Real-Time Prediction and Visualization',
+    layout = 'wide'
+)
+
 
 # Read the dataset
 st.markdown('This is our dataset after preprocessing.')

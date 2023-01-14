@@ -32,7 +32,7 @@ st.dataframe(df_reg.head())
 
 # make 'TotalSpent_RM' at first
 choice_list = ['TotalSpent_RM']
-for i in range(df_reg.columns):
+for i in range(len(df_reg.columns)):
     choice_list.append(df_reg.columns[i])
 choice_list = [*set(choice_list)] # remove duplicate
 

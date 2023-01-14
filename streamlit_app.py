@@ -23,7 +23,7 @@ df_reg = df_reg.drop(columns=df_reg.columns[0])
 st.markdown('At this part we use all the variable except Date and Time.')
 st.dataframe(df_reg.head())
 
-choice_reg = st.selectbox('Choose a variable to predict.', df_reg.unique())
+choice_reg = st.selectbox('Choose a variable to predict:', df_reg.columns)
 
 
 

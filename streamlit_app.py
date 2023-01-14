@@ -6,9 +6,11 @@ from streamlit_folium import folium_static
 
 st.title('Real-Time Prediction and Visualization')
 
+# Read the dataset
 new_df = pd.read_csv('final_df.csv')
 
-st.dataframe(new_df)
+# Linear Regression
+st.markdown('## Linear Regression Model for Prediction of TotalSpent_RM')
 
 
 

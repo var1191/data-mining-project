@@ -18,7 +18,7 @@ df_reg = new_df.copy()
 df_reg = df_reg.drop(columns=['Date', 'Time'])
 
 st.markdown('We use all the variable except Date and Time.')
-st.dataframe(df_reg.head()
+st.dataframe(df_reg.head())
 
 
 

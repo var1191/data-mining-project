@@ -9,6 +9,7 @@ st.set_page_config(
     page_title = 'Real-Time Prediction and Visualization',
     layout = 'wide'
 )
+st.title('Real-Time Prediction and Visualization')
 
 
 # Read the dataset

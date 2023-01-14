@@ -4,9 +4,10 @@ import pandas as pd
 import folium
 from streamlit_folium import folium_static
 
-st.title('Hello World!')
-st.text('My First Streamlit!')
+st.title('Real-Time Prediction and Visualization')
 
 st.markdown('# Header in markdown')
+
+
 
 

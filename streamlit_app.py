@@ -8,7 +8,7 @@ st.title('Real-Time Prediction and Visualization')
 
 df = pd.read_csv('final_df.csv')
 
-st.dataframe(df)
+st.dataframe(df, index=False)
 
 
 

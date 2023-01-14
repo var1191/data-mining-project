@@ -6,9 +6,9 @@ from streamlit_folium import folium_static
 
 st.title('Real-Time Prediction and Visualization')
 
-df = pd.read_csv('final_df.csv')
+new_df = pd.read_csv('final_df.csv')
 
-st.dataframe(df)
+st.dataframe(new_df)
 
 
 

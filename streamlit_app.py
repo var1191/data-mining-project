@@ -30,11 +30,15 @@ df_reg = new_df.copy()
 df_reg = df_reg.drop(columns=['Date', 'Time'])
 st.dataframe(df_reg.head())
 
+# make 'TotalSpent_RM' at first
 choice_list = ['TotalSpent_RM']
-choice_list.append(df_reg.columns)
+for i in range(df_reg.columns):
+    choice_list.append(df_reg.columns[i])
+choice_list = [*set(choice_list)] # remove duplicate
 
 # select a column as 'Y'
-choice_reg = st.selectbox('Choose a variable to predict:', np.unique(choice_list))
+choice_reg = st.selectbox('Choose a variable to predict:', choice_list)
+print(choice_list)
 
 # Dummify it
 X = df_reg.loc[:, df_reg.columns != choice_reg] 

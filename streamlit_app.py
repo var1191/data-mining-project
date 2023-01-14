@@ -30,8 +30,11 @@ df_reg = new_df.copy()
 df_reg = df_reg.drop(columns=['Date', 'Time'])
 st.dataframe(df_reg.head())
 
+choice_list = ['TotalSpent_RM']
+choice_list.append(df_reg.columns)
+
 # select a column as 'Y'
-choice_reg = st.selectbox('Choose a variable to predict:', df_reg.columns)
+choice_reg = st.selectbox('Choose a variable to predict:', choice_list.unique())
 
 # Dummify it
 X = df_reg.loc[:, df_reg.columns != choice_reg] 
@@ -50,6 +53,3 @@ X = pd.get_dummies(data=X)
 
 # Model Construction
 X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.3, random_state=101)
-
-
-

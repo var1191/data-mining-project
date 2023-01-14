@@ -4,5 +4,9 @@ import pandas as pd
 import folium
 from streamlit_folium import folium_static
 
-st.write('Hello World!')
+st.title('Hello World!')
+st.text('My First Streamlit!')
+
+st.header('This is a header.')
+
 

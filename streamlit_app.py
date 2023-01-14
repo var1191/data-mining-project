@@ -34,7 +34,7 @@ st.dataframe(df_reg.head())
 choice_list = ['TotalSpent_RM']
 for i in range(len(df_reg.columns)):
     choice_list.append(df_reg.columns[i])
-choice_list = list(set(choice_list)) # remove duplicate
+#choice_list = list(set(choice_list)) # remove duplicate
 
 # select a column as 'Y'
 choice_reg = st.selectbox('Choose a variable to predict:', choice_list)

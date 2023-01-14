@@ -17,11 +17,10 @@ st.dataframe(new_df.head())
 # Linear Regression
 st.markdown('## Linear Regression Model')
 
+st.markdown('At this part we use all the variable except Date and Time.')
 df_reg = new_df.copy()
 df_reg = df_reg.drop(columns=['Date', 'Time'])
 df_reg = df_reg.drop(columns=df_reg.columns[0])
-
-st.markdown('At this part we use all the variable except Date and Time.')
 st.dataframe(df_reg.head())
 
 choice_reg = st.selectbox('Choose a variable to predict:', df_reg.columns)

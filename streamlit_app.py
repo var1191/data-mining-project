@@ -6,7 +6,9 @@ from streamlit_folium import folium_static
 
 st.title('Real-Time Prediction and Visualization')
 
-st.markdown('# Header in markdown')
+df = pd.read_csv('final_df.csv')
+
+st.dataframe(df)
 
 
 

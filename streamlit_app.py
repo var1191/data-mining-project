@@ -34,7 +34,7 @@ choice_list = ['TotalSpent_RM']
 choice_list.append(df_reg.columns)
 
 # select a column as 'Y'
-choice_reg = st.selectbox('Choose a variable to predict:', choice_list.unique())
+choice_reg = st.selectbox('Choose a variable to predict:', np.unique(choice_list))
 
 # Dummify it
 X = df_reg.loc[:, df_reg.columns != choice_reg] 

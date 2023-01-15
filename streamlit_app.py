@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import folium
 from streamlit_folium import folium_static
-# import streamlit.compatibility as sc
 from PyPDF2 import PdfWriter, PdfReader
 
 figures = []
@@ -29,176 +28,176 @@ for col in df.select_dtypes(include='object'):
         figures.append(i)
 
 # 2) which gender comes to the laundry shop more
-# new_df = df.copy()
-# fig = plt.figure(figsize=(12, 8))
-# ax = sns.countplot(x=new_df["Gender"], palette='Pastel1',
-#                    order=new_df["Gender"].value_counts().index)
-# for container in ax.containers:
-#     ax.bar_label(container)
-# plt.title("Findings: From the plot above, we can see the female tends to visit the laundry shop more.",
-#           y=-0.12,  fontsize=12)
-# plt.suptitle('Which Gender visits the Self Laundry Shop more?',
-#              fontsize=18, color='teal')
-# st.pyplot(fig)
-# figures.append(fig)
+new_df = df.copy()
+fig = plt.figure(figsize=(12, 8))
+ax = sns.countplot(x=new_df["Gender"], palette='Pastel1',
+                   order=new_df["Gender"].value_counts().index)
+for container in ax.containers:
+    ax.bar_label(container)
+plt.title("Findings: From the plot above, we can see the female tends to visit the laundry shop more.",
+          y=-0.12,  fontsize=12)
+plt.suptitle('Which Gender visits the Self Laundry Shop more?',
+             fontsize=18, color='teal')
+st.pyplot(fig)
+figures.append(fig)
 
-# # 3) What types of customers are more likely to choose Washer No.X and Dryer No.Y?
-# fig = plt.figure(figsize=(12, 10))
-# ax = sns.countplot(x='Washer_No', data=new_df, hue="Dryer_No", palette='magma')
-# for container in ax.containers:
-#     ax.bar_label(container)
+# 3) What types of customers are more likely to choose Washer No.X and Dryer No.Y?
+fig = plt.figure(figsize=(12, 10))
+ax = sns.countplot(x='Washer_No', data=new_df, hue="Dryer_No", palette='magma')
+for container in ax.containers:
+    ax.bar_label(container)
 
-# sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
-# plt.suptitle('What type of customers are more likely to choose Washer No.X and Dryer No.Y?',
-#              fontsize=18, color='teal')
-# plt.title('Findings: From the grouped bar plot, we can see that for Washer No (3,4,6), \ncustomers are more likely to use Dryer_no 7 while for Washer No 5,\n customers are more likely to use Dryer_No 9.\n \n Thus, we will dive more into the types of customers choosing the highest and\n lowest frequency of choosing the corresponding washer and dryer in the next section:\n a) Highest frequency of customers choosing Washer_No.3 and Dryer_No.7 : 281\n b) Lowest frequency of customers choosing Washer_No.3 and Dryer_No.10 : 224', y=-0.5, fontsize=15)
-# plt.tight_layout()
-# st.pyplot(fig)
-# figures.append(fig)
+sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
+plt.suptitle('What type of customers are more likely to choose Washer No.X and Dryer No.Y?',
+             fontsize=18, color='teal')
+plt.title('Findings: From the grouped bar plot, we can see that for Washer No (3,4,6), \ncustomers are more likely to use Dryer_no 7 while for Washer No 5,\n customers are more likely to use Dryer_No 9.\n \n Thus, we will dive more into the types of customers choosing the highest and\n lowest frequency of choosing the corresponding washer and dryer in the next section:\n a) Highest frequency of customers choosing Washer_No.3 and Dryer_No.7 : 281\n b) Lowest frequency of customers choosing Washer_No.3 and Dryer_No.10 : 224', y=-0.5, fontsize=15)
+plt.tight_layout()
+st.pyplot(fig)
+figures.append(fig)
 
-# df2 = new_df.copy()
+df2 = new_df.copy()
 
-# #dryer, washer
-
-
-# def washer_dryer(x, y, df2copy, c, p):
-#     # Get only rows with corresponding washer and dryer
-#     df2copy = df2copy.loc[(df2copy["Washer_No"] == x) &
-#                           (df2copy["Dryer_No"] == y)]
-#     fig = plt.figure(figsize=(12, 10))
-#     # Pie chart according to Race
-#     data = df2copy['Race'].value_counts()
-#     label = df2copy['Race'].value_counts().index
-#     plt.pie(data, labels=label, autopct='%1.1f%%', explode=[
-#             0.05]*4, textprops={'fontsize': 14}, colors=c),
-#     plt.suptitle("What types of customers are more likely to choose Washer No." + str(x) + " and Dryer No." + str(y) +
-#                  "\n\n Race of Customers choosing Washer No." + str(x) + " and Dryer No." + str(y), fontsize=18, color='teal')
-#     st.pyplot(fig)
-#     figures.append(fig)
-
-#     # Grouped barplot not considering gender
-#     fig = plt.figure(figsize=(12, 10))
-#     fig = sns.catplot(data=df2copy, kind="bar", x="Race", y="Age_Range", hue="Body_Size", palette="dark", alpha=.6, height=5).set(
-#         title="Customers choosing Washer No." + str(x) + " and Dryer No." + str(y) + " (Without considering gender)")
-
-#     fig.despine(left=True)
-#     fig.set_axis_labels("", "Age")
-#     fig.legend.set_title("")
-#     plt.tight_layout()
-#     st.pyplot(fig)
-#     figures.append(fig)
-#     # set colours
-#     clrs = ["#4374B3", "#d68fb3"]
-#     sns.set_palette(sns.color_palette(clrs))
-
-#     fig = plt.figure(figsize=(12, 10))
-
-#     # Grouped barplot considering gender
-#     fig = sns.catplot(x="Race", y="Age_Range", hue="Body_Size", col="Gender",
-#                       palette=p, data=df2copy, kind="bar", height=4, aspect=.8)
-
-#     fig.fig.subplots_adjust(top=0.75)
-#     fig.fig.suptitle("Customers choosing Washer No. " + str(x) +
-#                      " and Dryer No." + str(y) + " (Considering gender)", fontsize=18, color='teal')
-
-#     plt.title('Findings: \n i) The majority of ethnicity of people who chose Washer No.3 and\n Dryer No.7 are as followed : Malay, Indian, Chinese, and Foreigners. \n \n ii) Without considering the gender, customers who mostly chose Washer No.3 and \n  Dryer No.7 are people of Chinese ethnicity with *fat Body_Size* within the age group\n of 35-45. \n\n iii)  Considering the gender, for male, people of Chinese and Malay ethnicity *fat Body_Size* \n tends to choose Washer No.3 and Dryer No.7 whereas for female, Chinese with \n *thin Body_Size* tends to choose Washer No.3 and Dryer No.7', x=-0.3, y=-1.4, fontsize=15)
-#     plt.tight_layout()
-#     st.pyplot(fig)
-#     figures.append(fig)
+#dryer, washer
 
 
-# def washer_dryer2(x, y, df2copy, c, p):
-#     # Get only rows with corresponding washer and dryer
-#     df2copy = df2copy.loc[(df2copy["Washer_No"] == x) &
-#                           (df2copy["Dryer_No"] == y)]
-#     fig = plt.figure(figsize=(12, 10))
-#     # Pie chart according to Race
-#     data = df2copy['Race'].value_counts()
-#     label = df2copy['Race'].value_counts().index
-#     plt.pie(data, labels=label, autopct='%1.1f%%', explode=[
-#             0.05]*4, textprops={'fontsize': 14}, colors=c),
-#     plt.suptitle("What types of customers are more likely to choose Washer No." + str(x) + " and Dryer No." + str(y) +
-#                  "\n\n Race of Customers choosing Washer No." + str(x) + " and Dryer No." + str(y), fontsize=18, color='teal')
-#     st.pyplot(fig)
-#     figures.append(fig)
+def washer_dryer(x, y, df2copy, c, p):
+    # Get only rows with corresponding washer and dryer
+    df2copy = df2copy.loc[(df2copy["Washer_No"] == x) &
+                          (df2copy["Dryer_No"] == y)]
+    fig = plt.figure(figsize=(12, 10))
+    # Pie chart according to Race
+    data = df2copy['Race'].value_counts()
+    label = df2copy['Race'].value_counts().index
+    plt.pie(data, labels=label, autopct='%1.1f%%', explode=[
+            0.05]*4, textprops={'fontsize': 14}, colors=c),
+    plt.suptitle("What types of customers are more likely to choose Washer No." + str(x) + " and Dryer No." + str(y) +
+                 "\n\n Race of Customers choosing Washer No." + str(x) + " and Dryer No." + str(y), fontsize=18, color='teal')
+    st.pyplot(fig)
+    figures.append(fig)
 
-#     # Grouped barplot not considering gender
-#     fig = plt.figure(figsize=(12, 10))
-#     fig = sns.catplot(data=df2copy, kind="bar", x="Race", y="Age_Range", hue="Body_Size", palette="dark", alpha=.6, height=5).set(
-#         title="Customers choosing Washer No." + str(x) + " and Dryer No." + str(y) + " (Without considering gender)")
+    # Grouped barplot not considering gender
+    fig = plt.figure(figsize=(12, 10))
+    fig = sns.catplot(data=df2copy, kind="bar", x="Race", y="Age_Range", hue="Body_Size", palette="dark", alpha=.6, height=5).set(
+        title="Customers choosing Washer No." + str(x) + " and Dryer No." + str(y) + " (Without considering gender)")
 
-#     fig.despine(left=True)
-#     fig.set_axis_labels("", "Age")
-#     fig.legend.set_title("")
-#     st.pyplot(fig)
-#     figures.append(fig)
-#     # set colours
-#     clrs = ["#4374B3", "#d68fb3"]
-#     sns.set_palette(sns.color_palette(clrs))
+    fig.despine(left=True)
+    fig.set_axis_labels("", "Age")
+    fig.legend.set_title("")
+    plt.tight_layout()
+    st.pyplot(fig)
+    figures.append(fig)
+    # set colours
+    clrs = ["#4374B3", "#d68fb3"]
+    sns.set_palette(sns.color_palette(clrs))
 
-#     fig = plt.figure(figsize=(12, 10))
+    fig = plt.figure(figsize=(12, 10))
 
-#     # Grouped barplot considering gender
-#     fig = sns.catplot(x="Race", y="Age_Range", hue="Body_Size", col="Gender",
-#                       palette=p, data=df2copy, kind="bar", height=4, aspect=.8)
+    # Grouped barplot considering gender
+    fig = sns.catplot(x="Race", y="Age_Range", hue="Body_Size", col="Gender",
+                      palette=p, data=df2copy, kind="bar", height=4, aspect=.8)
 
-#     fig.fig.subplots_adjust(top=0.75)
-#     fig.fig.suptitle("Customers choosing Washer No. " + str(x) +
-#                      " and Dryer No." + str(y) + " (Considering gender)", fontsize=18, color='teal')
+    fig.fig.subplots_adjust(top=0.75)
+    fig.fig.suptitle("Customers choosing Washer No. " + str(x) +
+                     " and Dryer No." + str(y) + " (Considering gender)", fontsize=18, color='teal')
 
-#     plt.title('Findings: \n i) The majority of ethnicity of people who chose Washer No.3 and\n Dryer No.10 are as followed : Indian, Malay, Chinese and Foreigners. \n \n ii) Without considering the gender, customers who mostly chose Washer No.3 and \n  Dryer No.10  are Foreigners and people of Malay ethnicity with thin Body_Size,\n all which are mostly within the age group of 35-45. \n\n iii)  Considering the gender, for male, people of Indian ethnicity with thin Body_Size \n tends to choose Washer No.3 and Dryer No.10 whereas for female,\n people of Malay and Chinese ethnicity with moderate Body_Size as well \n as Foreigners with thin Body_Size tends to choose Washer No.3 and Dryer No.10.', x=-0.3, y=-1.5, fontsize=15)
-#     plt.tight_layout()
-#     st.pyplot(fig)
-#     figures.append(fig)
-
-
-# df2copy = df2.copy()
-# c = ["#845EC2", "#D65DB1", "#FF6F91", "#FF9671"]
-# p = "Set2"
-# washer_dryer(3, 7, df2copy, c, p)
-
-# c = ["#E18392", "#BC7699", "#926C97", "#938fae"]
-# p = "blend:#7AB,#EDA"
-# washer_dryer2(3, 10, df2copy, c, p)
-
-# # 4) Which age group tends to visit the self-service laundry shop more often?
-# bins = [10, 20, 30, 40, 50, 60]
-# df4 = new_df.copy()
-# fig = plt.figure(figsize=(12, 10))
-# df4['Age_Group'] = pd.cut(df4['Age_Range'], bins=bins)
-# ax = sns.countplot(x='Age_Group', data=df4, palette="rocket")
-# for container in ax.containers:
-#     ax.bar_label(container)
-# plt.suptitle('Which age group tends to visit the self-service laundry shop more often?',
-#              fontsize=18, color='teal')
-# plt.title('Findings: We can see from the barplot above that the age group between (30-40] \n tends to visit the self-service laundry shop more frequently, whereas the age group between\n (10-20] is less likely to visit the shop. ', y=-0.25, fontsize=15)
-# plt.tight_layout()
-# st.pyplot(fig)
-# figures.append(fig)
-
-# # Do customers with bigger body size tend to buy more drinks?
-# fig = plt.figure(figsize=(12, 8))
-# colors = ["#E18392", "#BC7699", "#926C97"]
-# plt.pie(new_df['Body_Size'].value_counts().values, labels=new_df['Body_Size'].value_counts().index,
-#         autopct='%1.1f%%', textprops={'fontsize': 12}, colors=colors), plt.title("Body_Size", fontdict={'fontsize': 15})
-# plt.suptitle('Do customers with bigger body size tend to buy more drinks?',
-#              fontsize=25, color='teal')
-# st.pyplot(fig)
-# figures.append(fig)
+    plt.title('Findings: \n i) The majority of ethnicity of people who chose Washer No.3 and\n Dryer No.7 are as followed : Malay, Indian, Chinese, and Foreigners. \n \n ii) Without considering the gender, customers who mostly chose Washer No.3 and \n  Dryer No.7 are people of Chinese ethnicity with *fat Body_Size* within the age group\n of 35-45. \n\n iii)  Considering the gender, for male, people of Chinese and Malay ethnicity *fat Body_Size* \n tends to choose Washer No.3 and Dryer No.7 whereas for female, Chinese with \n *thin Body_Size* tends to choose Washer No.3 and Dryer No.7', x=-0.3, y=-1.4, fontsize=15)
+    plt.tight_layout()
+    st.pyplot(fig)
+    figures.append(fig)
 
 
-# df8 = new_df.copy()
-# fig = plt.figure(figsize=(12, 6))
-# plt.suptitle('Bigger Body Size, Buy More Drinks?', fontsize=30, color='teal')
-# plt.subplot(121), sns.barplot(data=df8, x='Body_Size',
-#                               y='buyDrinks', palette='spring')
-# plt.subplot(122), sns.lineplot(
-#     data=df8, x='Body_Size', y='buyDrinks', alpha=0.5)
-# plt.title('\nFindings: Customers who are in a bigger body size, tend to buy more drinks in the laundry shop',
-#           x=-0.25, y=-0.25, fontsize=15)
-# plt.tight_layout()
-# st.pyplot(fig)
-# figures.append(fig)
+def washer_dryer2(x, y, df2copy, c, p):
+    # Get only rows with corresponding washer and dryer
+    df2copy = df2copy.loc[(df2copy["Washer_No"] == x) &
+                          (df2copy["Dryer_No"] == y)]
+    fig = plt.figure(figsize=(12, 10))
+    # Pie chart according to Race
+    data = df2copy['Race'].value_counts()
+    label = df2copy['Race'].value_counts().index
+    plt.pie(data, labels=label, autopct='%1.1f%%', explode=[
+            0.05]*4, textprops={'fontsize': 14}, colors=c),
+    plt.suptitle("What types of customers are more likely to choose Washer No." + str(x) + " and Dryer No." + str(y) +
+                 "\n\n Race of Customers choosing Washer No." + str(x) + " and Dryer No." + str(y), fontsize=18, color='teal')
+    st.pyplot(fig)
+    figures.append(fig)
+
+    # Grouped barplot not considering gender
+    fig = plt.figure(figsize=(12, 10))
+    fig = sns.catplot(data=df2copy, kind="bar", x="Race", y="Age_Range", hue="Body_Size", palette="dark", alpha=.6, height=5).set(
+        title="Customers choosing Washer No." + str(x) + " and Dryer No." + str(y) + " (Without considering gender)")
+
+    fig.despine(left=True)
+    fig.set_axis_labels("", "Age")
+    fig.legend.set_title("")
+    st.pyplot(fig)
+    figures.append(fig)
+    # set colours
+    clrs = ["#4374B3", "#d68fb3"]
+    sns.set_palette(sns.color_palette(clrs))
+
+    fig = plt.figure(figsize=(12, 10))
+
+    # Grouped barplot considering gender
+    fig = sns.catplot(x="Race", y="Age_Range", hue="Body_Size", col="Gender",
+                      palette=p, data=df2copy, kind="bar", height=4, aspect=.8)
+
+    fig.fig.subplots_adjust(top=0.75)
+    fig.fig.suptitle("Customers choosing Washer No. " + str(x) +
+                     " and Dryer No." + str(y) + " (Considering gender)", fontsize=18, color='teal')
+
+    plt.title('Findings: \n i) The majority of ethnicity of people who chose Washer No.3 and\n Dryer No.10 are as followed : Indian, Malay, Chinese and Foreigners. \n \n ii) Without considering the gender, customers who mostly chose Washer No.3 and \n  Dryer No.10  are Foreigners and people of Malay ethnicity with thin Body_Size,\n all which are mostly within the age group of 35-45. \n\n iii)  Considering the gender, for male, people of Indian ethnicity with thin Body_Size \n tends to choose Washer No.3 and Dryer No.10 whereas for female,\n people of Malay and Chinese ethnicity with moderate Body_Size as well \n as Foreigners with thin Body_Size tends to choose Washer No.3 and Dryer No.10.', x=-0.3, y=-1.5, fontsize=15)
+    plt.tight_layout()
+    st.pyplot(fig)
+    figures.append(fig)
+
+
+df2copy = df2.copy()
+c = ["#845EC2", "#D65DB1", "#FF6F91", "#FF9671"]
+p = "Set2"
+washer_dryer(3, 7, df2copy, c, p)
+
+c = ["#E18392", "#BC7699", "#926C97", "#938fae"]
+p = "blend:#7AB,#EDA"
+washer_dryer2(3, 10, df2copy, c, p)
+
+# 4) Which age group tends to visit the self-service laundry shop more often?
+bins = [10, 20, 30, 40, 50, 60]
+df4 = new_df.copy()
+fig = plt.figure(figsize=(12, 10))
+df4['Age_Group'] = pd.cut(df4['Age_Range'], bins=bins)
+ax = sns.countplot(x='Age_Group', data=df4, palette="rocket")
+for container in ax.containers:
+    ax.bar_label(container)
+plt.suptitle('Which age group tends to visit the self-service laundry shop more often?',
+             fontsize=18, color='teal')
+plt.title('Findings: We can see from the barplot above that the age group between (30-40] \n tends to visit the self-service laundry shop more frequently, whereas the age group between\n (10-20] is less likely to visit the shop. ', y=-0.25, fontsize=15)
+plt.tight_layout()
+st.pyplot(fig)
+figures.append(fig)
+
+# Do customers with bigger body size tend to buy more drinks?
+fig = plt.figure(figsize=(12, 8))
+colors = ["#E18392", "#BC7699", "#926C97"]
+plt.pie(new_df['Body_Size'].value_counts().values, labels=new_df['Body_Size'].value_counts().index,
+        autopct='%1.1f%%', textprops={'fontsize': 12}, colors=colors), plt.title("Body_Size", fontdict={'fontsize': 15})
+plt.suptitle('Do customers with bigger body size tend to buy more drinks?',
+             fontsize=25, color='teal')
+st.pyplot(fig)
+figures.append(fig)
+
+
+df8 = new_df.copy()
+fig = plt.figure(figsize=(12, 6))
+plt.suptitle('Bigger Body Size, Buy More Drinks?', fontsize=30, color='teal')
+plt.subplot(121), sns.barplot(data=df8, x='Body_Size',
+                              y='buyDrinks', palette='spring')
+plt.subplot(122), sns.lineplot(
+    data=df8, x='Body_Size', y='buyDrinks', alpha=0.5)
+plt.title('\nFindings: Customers who are in a bigger body size, tend to buy more drinks in the laundry shop',
+          x=-0.25, y=-0.25, fontsize=15)
+plt.tight_layout()
+st.pyplot(fig)
+figures.append(fig)
 
 # Create a button that, when clicked, will save the figure as a PDF
 if st.button('Download as PDF'):
@@ -262,7 +261,7 @@ def prediction(classifier, lat, long, age, attire, pants, time, basket, shirt, s
     shirt2 = shirt_dict.get(shirt)
     size2 = basket_size_dict.get(basket_size)
     prediction = classifier.predict(
-        [[lat, long, age, attire2, pants2, time, basket2, shirt2, spent, size2]])
+        [pd.to_numeric([lat, long, age, attire2, pants2, time, basket2, shirt2, spent, size2])])
     if prediction == 1:
         predict = "Yes"
     else:
@@ -349,7 +348,7 @@ def main():
         ('Black', 'Blue', 'Grey', 'White', 'Brown', 'Purple', 'Red',
          'Orange', 'Pink', 'Yellow', 'Green'))
     shirt = st.selectbox(
-        'Basket Colour',
+        'Shirt Colour',
         ('Black', 'Grey', 'White', 'Brown', 'Red',  'Blue', 'Purple',
          'Orange', 'Pink', 'Yellow', 'Green'))
     spent = st.slider("Total Spent (RM)", min_value=7, max_value=21, value=7)

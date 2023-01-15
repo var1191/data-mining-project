@@ -20,8 +20,6 @@ plt.suptitle('Histogram for the Distribution of Numerical Features\n\n',
              fontsize=30, color='teal')
 figures.append(fig)
 st.pyplot(fig)
-st.markdown("This is some **bold** text that appears under the graph.")
-st.text('Streamlit is **_really_ cool**.')
 
 for col in df.select_dtypes(include='object'):
     if df[col].nunique() <= 12:

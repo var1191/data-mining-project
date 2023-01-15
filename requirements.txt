@@ -3,3 +3,4 @@ streamlit-folium
 scikit-learn
 matplotlib
 seaborn
+PyPDF2

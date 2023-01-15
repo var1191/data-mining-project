@@ -1,23 +1,13 @@
 import pickle
 import streamlit as st
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import folium
-import base64
-from fpdf import FPDF
-import subprocess
-from scipy.stats import chi2_contingency
 from streamlit_folium import folium_static
 # import streamlit.compatibility as sc
 from PyPDF2 import PdfWriter, PdfReader
 
-# @st.cache(suppress_st_warning=True)
-# @sc.mute_function
-
-
-# dt = pickle.load(pickle_in_dt)
 figures = []
 # read the csv that was preprocessed in jupyter file
 df = pd.read_csv("final_df.csv")
@@ -37,7 +27,6 @@ for col in df.select_dtypes(include='object'):
     if df[col].nunique() <= 12:
         i = plt.figure(figsize=(12, 8))
         sns.countplot(y=col, data=df)
-        plt.show()
         st.pyplot(i)
         figures.append(i)
 
@@ -64,10 +53,6 @@ for container in ax.containers:
 sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
 plt.suptitle('What type of customers are more likely to choose Washer No.X and Dryer No.Y?',
              fontsize=18, color='teal')
-#plt.title("Findings: From the grouped bar plot, we can see that for Washer No (3,4,6), \ncustomers are more likely to use Dryer_no 7 while for Washer No 5,\n customers are more likely to use Dryer_No 9.\n \n Thus, we will dive more into the types of customers choosing the highest \n and lowest frequency of choosing the corresponding washer and dryer in the next section:\n a) Highest frequency of customers choosing Washer_No.3 and Dryer_No.7 : 281\n b) Lowest frequency of customers choosing Washer_No.3 and Dryer_No.10 : 224\n",y=-1.2,  fontsize=15)
-# plt.suptitle("Findings: From the grouped bar plot, we can see that for Washer No (3,4,6), \ncustomers are more likely to use Dryer_no 7 while for Washer No 5,\n customers are more likely to use Dryer_No 9.\n",
-#             y= -0.1,fontsize=15)
-#plt.title('Findings: From the grouped bar plot, we can see that for Washer No (3,4,6), \ncustomers are more likely to use Dryer_no 7 while for Washer No 5,\n customers are more likely to use Dryer_No 9.\n \n Thus, we will dive more into the types of customers choosing the highest \n and lowest frequency of choosing the corresponding washer and dryer in the next section:\n', y=-0.4, fontsize=15)
 plt.title('Findings: From the grouped bar plot, we can see that for Washer No (3,4,6), \ncustomers are more likely to use Dryer_no 7 while for Washer No 5,\n customers are more likely to use Dryer_No 9.\n \n Thus, we will dive more into the types of customers choosing the highest and\n lowest frequency of choosing the corresponding washer and dryer in the next section:\n a) Highest frequency of customers choosing Washer_No.3 and Dryer_No.7 : 281\n b) Lowest frequency of customers choosing Washer_No.3 and Dryer_No.10 : 224', y=-0.5, fontsize=15)
 plt.tight_layout()
 st.pyplot(fig)
@@ -90,7 +75,6 @@ def washer_dryer(x, y, df2copy, c, p):
             0.05]*4, textprops={'fontsize': 14}, colors=c),
     plt.suptitle("What types of customers are more likely to choose Washer No." + str(x) + " and Dryer No." + str(y) +
                  "\n\n Race of Customers choosing Washer No." + str(x) + " and Dryer No." + str(y), fontsize=18, color='teal')
-    plt.show()
     st.pyplot(fig)
     figures.append(fig)
 
@@ -137,7 +121,6 @@ def washer_dryer2(x, y, df2copy, c, p):
             0.05]*4, textprops={'fontsize': 14}, colors=c),
     plt.suptitle("What types of customers are more likely to choose Washer No." + str(x) + " and Dryer No." + str(y) +
                  "\n\n Race of Customers choosing Washer No." + str(x) + " and Dryer No." + str(y), fontsize=18, color='teal')
-    plt.show()
     st.pyplot(fig)
     figures.append(fig)
 
@@ -195,7 +178,6 @@ plt.tight_layout()
 st.pyplot(fig)
 figures.append(fig)
 
-
 # Do customers with bigger body size tend to buy more drinks?
 fig = plt.figure(figsize=(12, 8))
 colors = ["#E18392", "#BC7699", "#926C97"]
@@ -211,7 +193,7 @@ df8 = new_df.copy()
 fig = plt.figure(figsize=(12, 6))
 plt.suptitle('Bigger Body Size, Buy More Drinks?', fontsize=30, color='teal')
 plt.subplot(121), sns.barplot(data=df8, x='Body_Size',
-                              y='buyDrinks', errorbar=('ci', 0), palette='spring')
+                              y='buyDrinks', palette='spring')
 plt.subplot(122), sns.lineplot(
     data=df8, x='Body_Size', y='buyDrinks', alpha=0.5)
 plt.title('\nFindings: Customers who are in a bigger body size, tend to buy more drinks in the laundry shop',
@@ -243,7 +225,7 @@ if st.button('Download as PDF'):
     for page in pdf_pages:
         output.add_page(page.pages[0])
 
-    with open("combined_figures.pdf", "wb") as outputStream:
+    with open("EDA.pdf", "wb") as outputStream:
         output.write(outputStream)
     output.close()
 

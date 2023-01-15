@@ -4,10 +4,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import folium
+from fpdf import FPDF
+import base64
+from tempfile import NamedTemporaryFile
 from streamlit_folium import folium_static
 from PyPDF2 import PdfWriter, PdfReader
 
 figures = []
+
 # read the csv that was preprocessed in jupyter file
 df = pd.read_csv("final_df.csv")
 st.markdown("<h1 style='text-align: center; color: white;'>Exploratary Data Analysis (EDA)</h1>",
@@ -199,8 +203,15 @@ plt.tight_layout()
 st.pyplot(fig)
 figures.append(fig)
 
+
+def create_download_link(val, filename):
+    b64 = base64.b64encode(val)  # val looks like b'...'
+    return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="{filename}.pdf">Download PDF</a>'
+
+
+exportPDF = st.button('Click here to download PDF')
 # Create a button that, when clicked, will save the figure as a PDF
-if st.button('Download as PDF'):
+if exportPDF:
     # # Code to save the figure as a PDF
     # with open("figure.pdf", "wb") as f:
     #     plt.savefig(f, format="pdf")
@@ -217,14 +228,22 @@ if st.button('Download as PDF'):
 
     # Create a new pdf file
     output = PdfWriter()
+    pdf = FPDF()
+    for fig in figures:
+        pdf.add_page()
+        with NamedTemporaryFile(delete=False, suffix=".png") as tmpfile:
+            fig.savefig(tmpfile.name)
+            pdf.image(tmpfile.name, 10, 10, 200, 100)
+    html = create_download_link(pdf.output(dest="S").encode("latin-1"), "EDA")
+    st.markdown(html, unsafe_allow_html=True)
 
     # Add all the pages from the list to the pdf file
-    for page in pdf_pages:
-        output.add_page(page.pages[0])
+    #for page in pdf_pages:
+    #    output.add_page(page.pages[0])
 
-    with open("EDA.pdf", "wb") as outputStream:
-        output.write(outputStream)
-    output.close()
+    # with open("EDA.pdf", "wb") as outputStream:
+    #    output.write(outputStream)
+    # output.close()
 
     # with open("temp.md", "w") as f:
     #     st.write(f, unsafe_allow_html=True)
@@ -348,7 +367,7 @@ def main():
         ('Black', 'Blue', 'Grey', 'White', 'Brown', 'Purple', 'Red',
          'Orange', 'Pink', 'Yellow', 'Green'))
     shirt = st.selectbox(
-        'Shirt Colour',
+        'Basket Colour',
         ('Black', 'Grey', 'White', 'Brown', 'Red',  'Blue', 'Purple',
          'Orange', 'Pink', 'Yellow', 'Green'))
     spent = st.slider("Total Spent (RM)", min_value=7, max_value=21, value=7)

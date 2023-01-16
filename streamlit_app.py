@@ -367,7 +367,7 @@ def main():
         ('Black', 'Blue', 'Grey', 'White', 'Brown', 'Purple', 'Red',
          'Orange', 'Pink', 'Yellow', 'Green'))
     shirt = st.selectbox(
-        'Basket Colour',
+        'Shirt Colour',
         ('Black', 'Grey', 'White', 'Brown', 'Red',  'Blue', 'Purple',
          'Orange', 'Pink', 'Yellow', 'Green'))
     spent = st.slider("Total Spent (RM)", min_value=7, max_value=21, value=7)
